@@ -1,0 +1,66 @@
+<!-- <HTML> The start of our html document; everything goes in here -->
+<html>
+<!-- <HEAD> the head is not displayed in the browser; 
+    rather, it provides the metadata for the page (telling the browser how to render it-->
+
+<head>
+    <title>A Leaflet map!</title>
+
+    <!-- Linking to our external resources (ie. Leaflet in this case) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+
+    <!-- CSS Styling Start-->
+    <!-- 
+    ** FIXME **
+    Notice that there is a small border around the map. 
+    Alter the CSS so that the map fills the entire page. Hint: try searching 
+    online for "full screen leaflet map" or something to that effect.
+    -->
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<!-- <BODY> The content that is rendered on the web page -->
+
+<body>
+
+    <!--
+    ** FIXME **
+    Add a nice header to the top of the page. 
+    Style this header however you like but make sure to include at least the
+    following items:
+        - Map title
+        - Course information (course name, your name, etc.)
+        - A link to https://leafletjs.com using the text: "I built this with Leaflet"
+    -->
+
+    <!-- the container for our map -->
+    <div id="map"></div>
+
+    <!-- 
+    Javascript! Hurray! The script for our webpage is placed down here since we
+    want the DOM (page objects) to load first and then have our script come in
+    that alters the content of the page (in this case adding a map)
+    ref: https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup
+    -->
+    <script>
+        // initialize the map
+        var map = L.map('map').setView([46.7867, -92.1005], 13);
+
+        // Add OpenStreetMap tile layer to map element
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+    </script>
+</body>
+
+</html>
