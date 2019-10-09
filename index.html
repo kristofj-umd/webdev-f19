@@ -11,13 +11,11 @@
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 
     <!-- CSS Styling Start-->
-    <!-- 
-    ** FIXME **
-    Notice that there is a small border around the map. 
-    Alter the CSS so that the map fills the entire page. Hint: try searching 
-    online for "full screen leaflet map" or something to that effect.
-    -->
     <style>
+        /* 
+            styling to make map full-screen
+            source: http://bl.ocks.org/d3noob/7654694
+        */
         body {
             padding: 0;
             margin: 0;
@@ -25,6 +23,54 @@
         #map {
             height: 100%;
             width: 100%;
+            top: 60px;
+        }
+        
+        /*  
+            Header styling
+            ref: http://jsfiddle.net/agorshkov23/5osbcpyc/
+        */
+        #header {
+            /* positions at the top of the page */
+            top: 0;
+            /* make it full width */
+            width: 100%;
+            /* make it visible on top of the map */
+            z-index: 999999;
+            /* fixed position within <body> */
+            position: fixed;
+            /* note that the map is positioned this far from the top of the
+            page*/
+            height: 60px;
+            /* white text */
+            color: white;
+            /* green background */
+            background-color: green;
+            /* some spacing */
+            padding-left: 12px;
+            /* my attempt at not overlapping the map*/
+            overflow: hidden;
+            /* different font */
+            font-family: Helvetica, sans-serif;
+        }
+        /* header children styling */
+        #header * {
+            /* put everything on the same line */
+            display: inline-block;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+        /* bring items to the right */
+        .right {
+            float: right;
+        }
+        /* link or anchor tag(<a>) styling */
+        a {
+            color: aqua;
+        }
+        /* put this text in line with other text in header */
+        #header h5 {
+            margin-top: 25px;
         }
     </style>
 </head>
@@ -32,16 +78,13 @@
 <!-- <BODY> The content that is rendered on the web page -->
 
 <body>
-
-    <!--
-    ** FIXME **
-    Add a nice header to the top of the page. 
-    Style this header however you like but make sure to include at least the
-    following items:
-        - Map title
-        - Course information (course name, your name, etc.)
-        - A link to https://leafletjs.com using the text: "I built this with Leaflet"
-    -->
+    
+    <!-- Possible solution for a header -->
+    <header id="header">
+        <h2>A Leaflet map!</h2>
+        <h3><a href="https://leafletjs.com" target="_blank">I built this with leaflet</a></h3>
+        <h5 class="right">GIS4533 | Fall 2018 | Kris Johnson</h5>
+    </header>
 
     <!-- the container for our map -->
     <div id="map"></div>
@@ -54,7 +97,7 @@
     -->
     <script>
         // initialize the map
-        var map = L.map('map').setView([46.7867, -92.1005], 13);
+        var map = L.map('map').setView([46.7867, -92.1005], 11);
 
         // Add OpenStreetMap tile layer to map element
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
