@@ -17,15 +17,17 @@
     <style>
         /* 
             styling to make map full-screen
-            source: http://bl.ocks.org/d3noob/7654694
+            source: https://leafletjs.com/examples/mobile/
         */
         body {
             padding: 0;
             margin: 0;
         }
-        #map {
+        html, body, #map {
             height: 100%;
             width: 100%;
+        }
+        #map {
             top: 60px;
         }
         
@@ -86,7 +88,7 @@
     <header id="header">
         <h2>A Leaflet map!</h2>
         <h3><a href="https://leafletjs.com" target="_blank">I built this with leaflet</a></h3>
-        <h5 class="right">GIS4533 | Fall 2018 | Kris Johnson</h5>
+        <h5 class="right">GIS4533 | Fall 2019 | Kris Johnson</h5>
     </header>
 
     <!-- the container for our map -->
@@ -102,10 +104,11 @@
         // initialize the map
         var map = L.map('map').setView([46.7867, -92.1005], 11);
 
-        // Add OpenStreetMap tile layer to map element
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+        // load a tile layer
+        // loading the base layer of map tiles using a URL template
+        // this template ({z}/{x}/{y}) allows leaflet to locate tiles with the
+        // correct zoom, x, and y coordinates
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
     </script>
 </body>
 
