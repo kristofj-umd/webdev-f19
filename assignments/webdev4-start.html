@@ -123,8 +123,10 @@
                     // calculate third party percent of vote using function
                     var thirdPartyPct = calculateThirdPartyPct(feature);
 
-                    // assign colors from the ColorBrewer yellow-green scale
+                    // setup a fill variable that we will assign values to below
                     var fill;
+                    
+                    // Assign colors to precincts based on third party pct.
                     // equal interval classification
                     // 7% or less
                     if (thirdPartyPct <= 7) {
@@ -139,13 +141,10 @@
                         fill = '#31a354';
                     }
 
-                    // FIXME: remove existing symbolization and create a diverging
-                    // symbology based the democrat or republic vote as a percent
-                    // of the total vote.
-                    // Use Colorbrewer's 5-class Red-Blue colors for this
-                    // http://colorbrewer2.org/#type=diverging&scheme=RdBu&n=5
-
                     // return style specification
+                    // everything will be the same for each feature, except for
+                    // the fill, which will be dynamic based on the percent of
+                    // the third party vote for that feature.
                     return {
                         color: '#636363',
                         weight: 2,
