@@ -1,0 +1,280 @@
+<!-- declare the doctype at the very top to tell the browser what it's dealing with -->
+<!DOCTYPE html>
+
+<!-- <HTML> The start of our html document; everything goes in here -->
+<html>
+
+<!-- <HEAD> the head is not displayed in the browser;
+    rather, it provides the metadata for the page (telling the browser how to render it-->
+
+<head>
+    <title>A Leaflet map!</title>
+
+    <!-- Linking to our external resources (ie. Leaflet in this case) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+
+    <!-- Leaflet Omnivore plugin -->
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+
+    <!-- CSS Styling Start-->
+    <style>
+        /*
+            styling to make map full-screen
+            source: https://leafletjs.com/examples/mobile/
+        */
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+        /* fix for map height
+           source: https://stackoverflow.com/a/36642058
+        */
+        #map {
+            height: calc(100vh - 60px);
+            top: 60px;
+        }
+
+        /*
+            Header styling
+            ref: http://jsfiddle.net/agorshkov23/5osbcpyc/
+        */
+        #header {
+            /* positions at the top of the page */
+            top: 0;
+            /* make it full width */
+            width: 100%;
+            /* make it visible on top of the map */
+            z-index: 999999;
+            /* fixed position within <body> */
+            position: fixed;
+            /* note that the map is positioned this far from the top of the
+            page*/
+            height: 60px;
+            /* white text */
+            color: white;
+            /* green background */
+            background-color: green;
+            /* some spacing */
+            padding-left: 12px;
+            /* my attempt at not overlapping the map*/
+            overflow: hidden;
+            /* different font */
+            font-family: Helvetica, sans-serif;
+        }
+
+        /* header children styling */
+        #header * {
+            /* put everything on the same line */
+            display: inline-block;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        /* bring items to the right */
+        .right {
+            float: right;
+        }
+
+        /* link or anchor tag(<a>) styling */
+        a {
+            color: aqua;
+        }
+
+        /* put this text in line with other text in header */
+        #header h5 {
+            margin-top: 25px;
+        }
+
+        /* styling for popups */
+        .leaflet-popup img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        /* styling for coordinate info boxes */
+        #info {
+            color: white;
+            z-index: 999;
+            position: relative;
+            margin: 20px;
+        }
+
+    </style>
+    <!-- end of CSS -->
+
+</head>
+<!-- end of head -->
+
+<!-- <BODY> The content that is rendered on the web page -->
+
+<body>
+
+    <!-- Possible solution for a header -->
+    <header id="header">
+        <h2>A Leaflet map!</h2>
+        <h3><a href="https://leafletjs.com" target="_blank">I built this with leaflet</a></h3>
+        <h5 class="right">GIS4533 | Fall 2019 | Kris Johnson</h5>
+    </header>
+
+    <!-- the container for our map -->
+    <div id="map"></div>
+
+    <!-- the container for displaying map coordinates-->
+    <pre id='info'></pre>
+
+    <!--
+    Javascript! Hurray! The script for our webpage is placed down here since we
+    want the DOM (page objects) to load first and then have our script come in
+    that alters the content of the page (in this case adding a map)
+    ref: https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup
+    -->
+    <script>
+        //---------------------------------------------------------------------
+        // webdev1
+        //    - initialize map
+        //    - add basemap
+        //---------------------------------------------------------------------
+
+        // initialize the map
+        var map = L.map('map').setView([46.8234957829967, -92.0850507169962], 12);
+
+        // load a tile layer
+        // loading the base layer of map tiles using a URL template
+        // this template ({z}/{x}/{y}) allows leaflet to locate tiles with the
+        // correct zoom, x, and y coordinates
+//        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+//            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+//        }).addTo(map);
+
+        //---------------------------------------------------------------------
+        // webdev3
+        //    - update map view to Duluth
+        //    - change basemap
+        //    - add 3 spatial features for Duluth
+        //      - include popups
+        //    - as mouse moves it shows lat lon
+        //---------------------------------------------------------------------
+
+        // change basemap to SpinalMap
+        var Thunderforest_SpinalMap = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
+            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            apikey: 'd8ebd0005b0d499b9953b6859696b681',
+            maxZoom: 22
+        }).addTo(map);
+
+        // create point feature for HartleyNatureCenter
+        var HNC = L.marker(
+            [
+              46.83857429883934,
+              -92.08296060562134
+            ])
+        // add popup for HNC with embedded image
+        .bindPopup("<h3>Hartley Nature Center</h3><p><img src='https://www.tkda.com/wp-content/uploads/2016/07/gvf_HartleyNatureCtr_1-2.jpg'><p/>", {
+            keepInView: true
+        })
+        // add HNC point to map
+        .addTo(map);
+
+        // create linear feature for Superior Hiking Trail
+        var SHT = L.polyline(
+             [[
+                46.803114624434066,
+                -92.08547115325928
+              ],
+              [
+                46.81233785813637,
+                -92.09057807922363
+              ],
+              [
+                46.82012056686149,
+                -92.09057807922363
+              ],
+              [
+                46.825553110960534,
+                -92.08581447601318
+              ],
+              [
+                46.83712113213383,
+                -92.08632946014404
+              ]],
+        // style SHT
+        {
+            color: 'lightgreen',
+            weight: 6
+        })
+        // add popup for SHT with link to website
+        .bindPopup("<h3>Superior Hiking Trail</h3><p><a href='https://superiorhiking.org'>https://superiorhiking.org</p>")
+        // add SHT to map
+        .addTo(map);
+
+        // create areal feature for UMD
+        var UMDArea = L.polygon(
+            [[
+                46.823820629488544,
+                -92.09220886230469
+            ],
+            [
+                46.81518675390936,
+                -92.09109306335449
+            ],
+            [
+                46.81495179914342,
+                -92.07864761352539
+            ],
+            [
+                46.81935703018063,
+                -92.07693099975586
+            ],
+            [
+                46.82029676609419,
+                -92.07959175109863
+            ],
+            [
+                46.82417300312463,
+                -92.08105087280273
+            ],
+            [
+                46.82567056531053,
+                -92.08444118499756
+            ],
+            [
+                46.823820629488544,
+                -92.09220886230469
+            ]],
+        // style UMD feature
+        {
+            color: 'gold',
+            weight: 4
+        })
+        // add popup for UMD with embedded video
+        .bindPopup('<h3>University of Minnesota - Duluth</h3><iframe width="400" height="255" src="https://www.youtube.com/embed/WOXvNUmMixo?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', {
+            maxWidth: 420
+        })
+        // add it to the map
+        .addTo(map);
+
+        // show latitude and longitude coordinates when mouse moves
+        // based on https://docs.mapbox.com/mapbox-gl-js/example/mouse-position/
+        map.on('mousemove', function (e) {
+            console.log('mousemove', e);
+            document.getElementById('info').innerHTML =
+            // e.lngLat is the longitude, latitude geographical position of the event
+            "Map coordinates: " + JSON.stringify(e.latlng);
+        });
+
+
+    </script>
+    <!-- end of JavaScript -->
+
+</body>
+<!-- end of body -->
+
+</html>
+<!-- end of html -->
