@@ -99,7 +99,7 @@
         }
 
         /* styling for coordinate info boxes */
-        #info {
+        #containerForMapCoordinates {
             color: white;
             z-index: 999;
             position: relative;
@@ -127,7 +127,7 @@
     <div id="map"></div>
 
     <!-- the container for displaying map coordinates-->
-    <pre id='info'></pre>
+    <pre id='containerForMapCoordinates'></pre>
 
     <!--
     Javascript! Hurray! The script for our webpage is placed down here since we
@@ -259,14 +259,16 @@
         })
         // add it to the map
         .addTo(map);
-
+        
+        // Task 5. Display the latitude and longitude coordinates of the mouse cursor as it moves around the map
         // show latitude and longitude coordinates when mouse moves
         // based on https://docs.mapbox.com/mapbox-gl-js/example/mouse-position/
-        map.on('mousemove', function (e) {
-            console.log('mousemove', e);
-            document.getElementById('info').innerHTML =
+        map.on('mousemove', function (hoverEventVariable) {
+            console.log('mouse latitude', hoverEventVariable.latlng.lat);
+            // updating the HTML content for the "info" element
+            document.getElementById('containerForMapCoordinates').innerHTML =
             // e.lngLat is the longitude, latitude geographical position of the event
-            "Map coordinates: " + JSON.stringify(e.latlng);
+            "Map coordinates: " + JSON.stringify(hoverEventVariable.latlng);
         });
 
 

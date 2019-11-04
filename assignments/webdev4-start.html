@@ -117,11 +117,15 @@
         $.getJSON("../data/duluth_precincts_WGS84.geojson",function(data){
             
             // add GeoJSON layer to the map once the file is loaded
+            // data = GeoJSON data
+            console.log('geojson data', data);
             L.geoJson(data,{
+                // a function to style our geojson layer
                 style: function (feature) {
 
                     // calculate third party percent of vote using function
                     var thirdPartyPct = calculateThirdPartyPct(feature);
+//                    console.log('third party percent for', feature.properties.PCTNAME, thirdPartyPct, '%');
 
                     // setup a fill variable that we will assign values to below
                     var fill;
@@ -131,8 +135,9 @@
                     // 7% or less
                     if (thirdPartyPct <= 7) {
                         fill = '#f7fcb9';
+                        console.log('7% or less?', thirdPartyPct);
                     }
-                    // 11% or less
+                    // 8% - 11%
                     else if (thirdPartyPct <= 11) {
                         fill = '#addd8e';
                     }
@@ -167,7 +172,7 @@
         });	
         
         // a function that takes a feature and returns the percent of the vote
-        // that doesn't belong to Republican or Democrat (ie. Third Party)
+        // that doesn't belong to Republican or Democrat (ie. the Third Party)
         function calculateThirdPartyPct(feature) {
             var demVote = feature.properties.USPRSDFL;
             var repVote = feature.properties.USPRSR;
