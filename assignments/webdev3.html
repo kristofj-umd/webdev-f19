@@ -17,6 +17,9 @@
     <!-- Leaflet Omnivore plugin -->
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
 
+    <!-- Load jQuery external library for running GET request -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
     <!-- CSS Styling Start-->
     <style>
         /*
@@ -270,6 +273,13 @@
             // e.lngLat is the longitude, latitude geographical position of the event
             "Map coordinates: " + JSON.stringify(hoverEventVariable.latlng);
         });
+        
+        // BONUS: run a Mapbox search query when user clicks the map
+//        map.on('click', function (e) {
+//            $.getJSON("https://api.mapbox.com/geocoding/v5/mapbox.places/-107.29394531249505%2C45.96163525044682.json?access_token=pk.eyJ1IjoibWF0dGZpY2tlIiwiYSI6ImNqNnM2YmFoNzAwcTMzM214NTB1NHdwbnoifQ.Or19S7KmYPHW8YjRz82v6g&cachebuster=1571165142648&autocomplete=true", function(data) {
+//                console.log(data);
+//            })
+//        })
 
 
     </script>
